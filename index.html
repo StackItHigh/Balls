@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JESSE BALLSAK | Coin Nothing</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue-dark: #0033cc;
+            --blue-mid: #0052ff;
+            --blue-bright: #0066ff;
+            --blue-glow: #3399ff;
+            --black: #000000;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(180deg, var(--black) 0%, var(--blue-dark) 50%, var(--black) 100%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 30px 0;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--blue-bright);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .nav-logo-small {
+            height: 50px;
+            filter: drop-shadow(0 0 20px var(--blue-bright));
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo-small:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-bright);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue-glow);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 0 50px;
+            position: relative;
+        }
+
+        /* Main Image Container with 3D Effects */
+        .main-image-container {
+            margin-bottom: 60px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-main-image {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            border-radius: 30px;
+            border: 4px solid var(--blue-bright);
+            box-shadow: 
+                0 0 60px var(--blue-bright),
+                inset 0 0 30px rgba(0, 102, 255, 0.3);
+            animation: float3D 8s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        /* Animated border effect */
+        .image-border {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 35px;
+            background: linear-gradient(45deg, 
+                var(--blue-bright), 
+                var(--white), 
+                var(--blue-bright),
+                var(--white));
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease infinite;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Hover effect for main image */
+        .image-wrapper:hover .hero-main-image {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 100px var(--blue-bright),
+                inset 0 0 50px rgba(0, 102, 255, 0.5);
+        }
+
+        /* Floating particles around image */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--blue-bright);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatParticle 6s ease-in-out infinite;
+            box-shadow: 0 0 20px var(--blue-bright);
+        }
+
+        .particle:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(3) {
+            bottom: 15%;
+            left: 8%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(4) {
+            bottom: 25%;
+            right: 5%;
+            animation-delay: 3s;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-40px) scale(1.5);
+                opacity: 0.5;
+            }
+        }
+
+        /* Hero Text */
+        .hero-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--white), var(--blue-glow), var(--white));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+            text-shadow: 0 0 80px var(--blue-bright);
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            text-align: center;
+            color: var(--blue-glow);
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-primary {
+            background: var(--blue-bright);
+            color: var(--white);
+            border: 2px solid var(--blue-bright);
+            box-shadow: 0 0 30px var(--blue-bright);
+        }
+
+        .cta-primary:hover {
+            background: var(--white);
+            color: var(--blue-bright);
+            box-shadow: 0 0 50px var(--white);
+            transform: translateY(-5px);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .cta-secondary:hover {
+            background: var(--white);
+            color: var(--black);
+            box-shadow: 0 0 30px var(--white);
+            transform: translateY(-5px);
+        }
+
+        /* Scrolling Ticker */
+        .ticker {
+            width: 100%;
+            overflow: hidden;
+            background: var(--blue-bright);
+            padding: 25px 0;
+            border-top: 3px solid var(--white);
+            border-bottom: 3px solid var(--white);
+            margin: 80px 0;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-item {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin: 0 100px;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Info Cards Section */
+        .info-section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--white);
+            text-shadow: 0 0 30px var(--blue-bright);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(0, 51, 204, 0.9), rgba(0, 82, 255, 0.3));
+            border: 3px solid var(--blue-bright);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.3) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .info-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px var(--blue-bright);
+            border-color: var(--white);
+        }
+
+        .info-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 2px solid var(--blue-bright);
+            transition: transform 0.4s ease;
+            aspect-ratio: 1;
+        }
+
+        .info-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .info-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--blue-glow);
+            margin-bottom: 20px;
+        }
+
+        .info-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .info-desc {
+            font-size: 1.1rem;
+            color: var(--white);
+            opacity: 0.8;
+        }
+
+        /* Contract Section */
+        .contract-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .contract-box {
+            background: linear-gradient(135deg, rgba(0, 51, 204, 0.9), rgba(0, 82, 255, 0.3));
+            border: 4px solid var(--blue-bright);
+            border-radius: 25px;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contract-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        .contract-address {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            color: var(--white);
+            word-break: break-all;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            border: 2px solid var(--blue-bright);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 100px 0;
+            background: url('ballsbackground2.png') center/cover no-repeat;
+            position: relative;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .about-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-text {
+            font-size: 1.4rem;
+            line-height: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            background: rgba(0, 51, 204, 0.8);
+            padding: 60px;
+            border-radius: 30px;
+            border: 3px solid var(--blue-bright);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-text strong {
+            color: var(--blue-glow);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        .gallery-banner {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-scroll {
+            display: flex;
+            animation: galleryScroll 20s linear infinite;
+            width: max-content;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 4px solid var(--blue-bright);
+            width: 450px;
+            height: 450px;
+            flex-shrink: 0;
+            margin: 0 20px;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--blue-bright) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px var(--blue-bright);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item:hover::after {
+            opacity: 0.5;
+        }
+
+        @keyframes galleryScroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Social Section */
+        .social-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+
+        .social-link {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+            border: 4px solid var(--blue-bright);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--white);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-15px) rotate(360deg);
+            box-shadow: 0 20px 60px var(--blue-bright);
+        }
+
+        .social-link:hover::before {
+            opacity: 0.1;
+        }
+
+        .social-link img {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero-main-image {
+                max-width: 90%;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .ticker-item {
+                font-size: 1.5rem;
+                margin: 0 50px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-text {
+                padding: 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="bg-wrapper">
+        <div class="stars" id="stars"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#tokenomics">Tokenomics</a>
+                <a href="#gallery-section">Gallery</a>
+                <a href="#community">Community</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <!-- Animated Main Image -->
+            <div class="main-image-container">
+                <div class="image-wrapper">
+                    <div class="image-border"></div>
+                    <img src="BALLS.jpg" alt="Jesse Ballsak" class="hero-main-image">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+            </div>
+
+            <h1 class="hero-title">Jesse Ballsak</h1>
+            <p class="hero-subtitle">Coin Nothing</p>
+
+            <div class="cta-buttons">
+                <a href="#" class="cta-btn cta-primary">Buy $BALLS</a>
+                <a href="#community" class="cta-btn cta-secondary">Join Community</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticker -->
+    <div class="ticker">
+        <div class="ticker-content">
+            <span class="ticker-item">$BALLS</span>
+            <span class="ticker-item">⚡</span>
+            <span class="ticker-item">$BALLS</span>
+            <span class="ticker-item">⚡</span>
+            <span class="ticker-item">$BALLS</span>
+            <span class="ticker-item">⚡</span>
+            <span class="ticker-item">$BALLS</span>
+            <span class="ticker-item">⚡</span>
+            <span class="ticker-item">$BALLS</span>
+            <span class="ticker-item">⚡</span>
+            <span class="ticker-item">$BALLS</span>
+            <span class="ticker-item">⚡</span>
+        </div>
+    </div>
+
+    <!-- Info Cards -->
+    <section class="info-section" id="tokenomics">
+        <div class="container">
+            <h2 class="section-title">Tokenomics</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <img src="BALLS1.JPG" alt="Token">
+                    <h3>Token</h3>
+                    <div class="info-value">$BALLS</div>
+                    <p class="info-desc">Revolutionary Token</p>
+                </div>
+
+                <div class="info-card">
+                    <img src="BALLS2.JPG" alt="Supply">
+                    <h3>Supply</h3>
+                    <div class="info-value">1,000,000,000</div>
+                    <p class="info-desc">Total Maximum Supply</p>
+                </div>
+
+                <div class="info-card">
+                    <img src="BALLS3.JPG" alt="Liquidity">
+                    <h3>Liquidity</h3>
+                    <div class="info-value">LP LOCKED</div>
+                    <p class="info-desc">Permanently Secured</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contract -->
+    <section class="contract-section">
+        <div class="container">
+            <h2 class="section-title">Contract Address</h2>
+            <div class="contract-box">
+                <p class="contract-address">489324723894723987429837</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Jesse Ballsak</h2>
+            <p class="about-text">
+                Welcome. I'm <strong>Jesse Ballsak</strong>. I'm a strong believer in coining nothing, that building is a waste of time and meme coins are the future.
+                <br><br>
+                I watch many people build larp tech, believing in a creator economy and quite frankly it makes me sick. So lets start a movement - <strong>Coin Nothing, Meme Everything</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery-section" id="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Gallery</h2>
+        </div>
+        <div class="gallery-banner">
+            <div class="gallery-scroll">
+                <div class="gallery-item">
+                    <img src="BALLS4.PNG" alt="Jesse Ballsak Community">
+                </div>
+                <div class="gallery-item">
+                    <img src="BALLS5.JPG" alt="Jesse Ballsak Token">
+                </div>
+                <div class="gallery-item">
+                    <img src="BALLS6.PNG" alt="Jesse Ballsak Revolution">
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="gallery-item">
+                    <img src="BALLS4.PNG" alt="Jesse Ballsak Community">
+                </div>
+                <div class="gallery-item">
+                    <img src="BALLS5.JPG" alt="Jesse Ballsak Token">
+                </div>
+                <div class="gallery-item">
+                    <img src="BALLS6.PNG" alt="Jesse Ballsak Revolution">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social -->
+    <section class="social-section" id="community">
+        <div class="container">
+            <h2 class="section-title">Join The Community</h2>
+            <div class="social-grid">
+                <a href="https://dexscreener.com" class="social-link" target="_blank">
+                    <img src="dexs.png" alt="DexScreener">
+                </a>
+                <a href="https://www.dextools.io" class="social-link" target="_blank">
+                    <img src="dext.png" alt="DEXTools">
+                </a>
+                <a href="https://t.me/monpepemonad" class="social-link" target="_blank">
+                    <img src="tg.png" alt="Telegram">
+                </a>
+                <a href="https://twitter.com" class="social-link" target="_blank">
+                    <img src="X.png" alt="X (Twitter)">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Ensure page opens at top
+        if (window.location.hash) {
+            window.history.replaceState(null, null, window.location.pathname);
+        }
+        window.scrollTo(0, 0);
+
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // 3D mouse follow effect for main image - DISABLED
+        const imageWrapper = document.querySelector('.image-wrapper');
+        const mainImage = document.querySelector('.hero-main-image');
+
+        // Removed mouse move effect to keep image centered without diagonal tilt
+    </script>
+</body>
+</html>
